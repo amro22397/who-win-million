@@ -7,7 +7,8 @@ import wrong from "../sounds/wrong.mp3";
 const Trivia = ({ data,
     questionNumber,
     setQuestionNumber,
-    setTimeOut, }) => {
+    setTimeOut,
+    setQuizFinished }) => {
 
   const [question, setQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -41,11 +42,16 @@ const Trivia = ({ data,
 
     delay(6000, () => {
         if (a.correct) {
-            correctAnswer();
-            delay(1000, () => {
-            setQuestionNumber((prev) => prev + 1);
-            setSelectedAnswer(null);
-            })
+            if (questionNumber === 5) {
+                setQuizFinished(true);
+                setSelectedAnswer(null);
+            } else {
+                correctAnswer();
+                delay(1000, () => {
+                    setQuestionNumber((prev) => prev + 1);
+                    setSelectedAnswer(null);
+                    })
+            }
         } else {
             wrongAnswer();
             delay(1000, () => {
