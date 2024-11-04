@@ -124,7 +124,7 @@ const App = () => {
           <div className='endText-div'>
           <h1 className="endText">You earned: {earned}</h1>
 
-          <div className="">Hello branch</div>
+          <div className="">aorawoefodo</div>
 
           <button className="again-btn" onClick={() => {
             setTimeOut(false);
