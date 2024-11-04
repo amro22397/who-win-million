@@ -3,6 +3,7 @@ import './App.css'
 import Trivia from './components/Trivia';
 import Timer from './components/Timer';
 import Start from './components/Start';
+import { data } from './components/constants';
 
 const App = () => { 
 
@@ -11,75 +12,10 @@ const App = () => {
   const [questionNumber, setQuestionNumber] = useState(1);
   const [earned, setEarned] = useState("$ 0");
 
+  const [quizFinished, setQuizFinished] = useState(false);
 
-  const data = [
-    {
-      id: 1,
-      question: "Rolex is a company that specializes in what type of product?",
-      answers: [
-        {
-          text: "Phone",
-          correct: false,
-        },
-        {
-          text: "Watches",
-          correct: true,
-        },
-        {
-          text: "Food",
-          correct: false,
-        },
-        {
-          text: "Cosmetic",
-          correct: false,
-        },
-      ],
-    },
-    {
-      id: 2,
-      question: "When did the website `Facebook` launch?",
-      answers: [
-        {
-          text: "2004",
-          correct: true,
-        },
-        {
-          text: "2005",
-          correct: false,
-        },
-        {
-          text: "2006",
-          correct: false,
-        },
-        {
-          text: "2007",
-          correct: false,
-        },
-      ],
-    },
-    {
-      id: 3,
-      question: "Who played the character of harry potter in movie?",
-      answers: [
-        {
-          text: "Johnny Deep",
-          correct: false,
-        },
-        {
-          text: "Leonardo Di Caprio",
-          correct: false,
-        },
-        {
-          text: "Denzel Washington",
-          correct: false,
-        },
-        {
-          text: "Daniel Red Cliff",
-          correct: true,
-        },
-      ],
-    },
-  ];
+
+  
 
 
 
@@ -90,17 +26,7 @@ const App = () => {
         { id: 2, amount: "$ 200" },
         { id: 3, amount: "$ 300" },
         { id: 4, amount: "$ 500" },
-        { id: 5, amount: "$ 1.000" },
-        { id: 6, amount: "$ 2.000" },
-        { id: 7, amount: "$ 4.000" },
-        { id: 8, amount: "$ 8.000" },
-        { id: 9, amount: "$ 16.000" },
-        { id: 10, amount: "$ 32.000" },
-        { id: 11, amount: "$ 64.000" },
-        { id: 12, amount: "$ 125.000" },
-        { id: 13, amount: "$ 250.000" },
-        { id: 14, amount: "$ 500.000" },
-        { id: 15, amount: "$ 1.000.000" },
+        { id: 5, amount: "$ 1.000" }
       ].reverse(),
     []
   );
@@ -120,16 +46,24 @@ const App = () => {
       ): (
         <>
         <div className="main">
-        {timeOut ? (
+        {quizFinished ? (
+          <div className='endText-div'>
+          <h1 className="endText">You Win $ 1000</h1>
+
+          <button className="again-btn" onClick={() => {
+            setQuestionNumber(1);
+            setTimeOut(false);
+            setQuizFinished(false)
+          }}>Play again</button>
+          </div>
+        )
+        :timeOut ? (
           <div className='endText-div'>
           <h1 className="endText">You earned: {earned}</h1>
 
-          <div className="">aorawoefodo</div>
-
           <button className="again-btn" onClick={() => {
             setTimeOut(false);
-            setQuestionNumber(1);
-          }}>Start again</button>
+          }}>Retry</button>
           </div>
         ) : (
           <>
@@ -145,7 +79,8 @@ const App = () => {
           <Trivia data={data}
                     questionNumber={questionNumber}
                     setQuestionNumber={setQuestionNumber}
-                    setTimeOut={setTimeOut} />
+                    setTimeOut={setTimeOut}
+                    setQuizFinished={setQuizFinished} />
         </div>
           </>
         )}
